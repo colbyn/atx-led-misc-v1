@@ -1,0 +1,30 @@
+{
+    "cSpell.words": [
+      "Avenir",
+      "colbyn",
+      "Didot",
+      "Hoefler",
+      "luminaire",
+      "luminaires",
+      "melanopic",
+      "Menlo",
+      "octique",
+      "Smallcaps",
+      "typst",
+      "Wadman",
+      "watchexec"
+    ],
+  "tinymist.rootPath": "${workspaceFolder}",
+  "tinymist.projectResolution": "lockDatabase",
+  "tinymist.typstExtraArgs": [
+    "--root",
+    ".",
+    "src/main.typ"
+  ],
+
+  "tinymist.exportPdf": "onSave",
+  "tinymist.outputPath": "$root/build/$name",
+  "tinymist.showExportFileIn": "systemDefault",
+  "tinymist.syntaxOnly": "disable",
+  "tinymist.compileStatus": "enable"
+}
