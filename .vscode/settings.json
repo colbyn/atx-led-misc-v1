@@ -1,18 +1,25 @@
 {
     "cSpell.words": [
+      "acrich",
       "Avenir",
       "colbyn",
       "Didot",
       "Hoefler",
+      "inspectable",
       "luminaire",
       "luminaires",
       "melanopic",
       "Menlo",
       "octique",
+      "overlayed",
+      "pagebreak",
+      "Panelization",
+      "seoulsemicon",
       "Smallcaps",
       "typst",
       "Wadman",
-      "watchexec"
+      "watchexec",
+      "webp"
     ],
   "tinymist.rootPath": "${workspaceFolder}",
   "tinymist.projectResolution": "lockDatabase",

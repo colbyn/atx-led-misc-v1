@@ -99,14 +99,6 @@
         weight: 900,
         fill: primary-color-text,
       )[On ATX-LED],
-      text(
-        font: font-subtitle,
-        size: 18pt,
-        weight: 400,
-        fill: primary-color-text,
-      )[
-        Notes toward a low-voltage architecture for solid-state light
-      ],
     )
   ]
 ]
@@ -152,12 +144,24 @@
     justify: true,
   )
 
-  #spread-row(
-    transform: x => meta-text(x),
-  )[
-    #align(left)[Colbyn Wadman]
+  #spread-row[
+    #align(left)[
+      #text(
+        font: font-title,
+        size: 30pt,
+        weight: 500,
+        fill: primary-color-text,
+      )[Colbyn Wadman,]
+    ]
   ][
-    #align(right)[Salt Lake City, UT]
+    #align(right)[
+      #text(
+        font: font-meta,
+        size: 20pt,
+        weight: 100,
+        fill: primary-color-text,
+      )[Salt Lake City, UT]
+    ]
   ]
 
   #title-block()
