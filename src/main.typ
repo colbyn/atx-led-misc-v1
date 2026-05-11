@@ -67,7 +67,7 @@
 #set text(
   font: "Avenir Next",
   fill: rgb("#444446"),
-  size: 12pt,
+  size: 10pt,
 )
 
 #set par(

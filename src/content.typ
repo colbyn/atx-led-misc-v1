@@ -1,10 +1,13 @@
 // Don't pollute global namespace
 
-#{
-  include "content/form-follows-function.typ"
-}
+#outline()
 
-#{
-  include "content/panel-based-lighting.typ"
-}
+#pagebreak()
 
+#{ include "content/form-follows-function.typ" }
+
+#{ include "content/panel-based-lighting.typ" }
+
+#{ include "content/questions.typ" }
+
+#{ include "content/catalogue.typ" }
