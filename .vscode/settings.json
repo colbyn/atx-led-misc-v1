@@ -7,6 +7,7 @@
       "Downlight",
       "Downlights",
       "Hoefler",
+      "homerun",
       "inspectable",
       "Legrand",
       "luminaire",
@@ -25,7 +26,8 @@
       "typst",
       "Wadman",
       "watchexec",
-      "webp"
+      "webp",
+      "WIP"
     ],
   "tinymist.rootPath": "${workspaceFolder}",
   "tinymist.projectResolution": "lockDatabase",
