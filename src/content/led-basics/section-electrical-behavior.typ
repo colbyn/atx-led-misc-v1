@@ -1,5 +1,5 @@
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
-#import "path.typ": path
+#import "tables.typ": argument-table, table-label, table-body, table-rule, table-strong-rule
 
 == Electrical Behavior: Incandescent vs LED
 
@@ -7,111 +7,73 @@
 
 The fundamental difference is not efficiency. It is how each source behaves electrically when connected to power.
 
-#v(12pt)
+#v(14pt)
 
-#grid(
-  columns: (1fr, 1fr),
-  column-gutter: 22pt,
-  align: top,
+#argument-table(
+  columns: (0.95fr, 1.1fr, 1.35fr),
 
-  [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      INCANDESCENT
-    ]
+  table.header(
+    [#table-label[INCANDESCENT]],
+    [#table-label[LED]],
+    [#table-label[DESIGN MEANING]],
+  ),
 
-    #v(5pt)
+  table-strong-rule(),
 
-    #text(size: 12pt, weight: "medium")[
-      Voltage-driven and self-stabilizing.
-    ]
+  [#table-body[voltage-driven load]],
+  [#table-body[current-driven diode]],
+  [#table-body[The incandescent lamp can tolerate direct voltage. The LED needs controlled current.]],
 
-    #v(7pt)
+  table-rule(),
 
-    An incandescent lamp connects directly to mains voltage. Its filament heats until it glows white-hot.
+  [#table-body[filament heats until it glows]],
+  [#table-body[junction emits when forward biased]],
+  [#table-body[The LED’s operating point depends on semiconductor behavior, not bulk heating alone.]],
 
-    #v(6pt)
+  table-rule(),
 
-    As the filament temperature rises, its resistance also rises. That rising resistance naturally limits current.
+  [#table-body[resistance rises with heat]],
+  [#table-body[forward voltage usually falls with heat]],
+  [#table-body[The incandescent filament tends to limit current. The LED can move toward more current.]],
 
-    #v(8pt)
+  table-rule(),
 
-    #line(length: 100%, stroke: rgb("#d8d8e2"))
+  [#table-body[naturally self-stabilizing]],
+  [#table-body[thermally sensitive]],
+  [#table-body[The LED requires both current regulation and a thermal path.]],
 
-    #v(7pt)
+  table-rule(),
 
-    #set text(size: 9pt)
-
-    voltage source \
-    heating filament \
-    rising resistance \
-    crude current limiting \
-    electrically forgiving load
-  ],
-
-  [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      LED
-    ]
-
-    #v(5pt)
-
-    #text(size: 12pt, weight: "medium")[
-      Current-driven and thermally sensitive.
-    ]
-
-    #v(7pt)
-
-    An LED has a forward-voltage region where it begins conducting strongly.
-
-    #v(6pt)
-
-    Once it enters that region, small voltage changes can produce large current changes. As the junction gets hotter, forward voltage usually falls.
-
-    #v(8pt)
-
-    #line(length: 100%, stroke: rgb("#d8d8e2"))
-
-    #v(7pt)
-
-    #set text(size: 9pt)
-
-    low-voltage diode \
-    steep I–V behavior \
-    falling forward voltage with heat \
-    current can increase further \
-    requires regulation
-  ],
+  [#table-body[electrically forgiving]],
+  [#table-body[requires regulation]],
+  [#table-body[The driver is not accessory hardware. It is the real electrical interface.]],
 )
 
-#v(16pt)
+#v(18pt)
 
-#grid(
+#argument-table(
   columns: (0.28fr, 1fr),
-  column-gutter: 18pt,
-  align: top,
 
+  [#table-label[FAILURE MODE]],
   [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      FAILURE MODE
+    #table-body[
+      The LED’s electrical and thermal behavior can reinforce itself. More current creates more heat; more heat can lower forward voltage; lower forward voltage can allow still more current.
     ]
-  ],
-
-  [
-    The LED’s electrical and thermal behavior can reinforce itself. More current creates more heat; more heat can lower forward voltage; lower forward voltage can allow still more current.
   ],
 )
 
-#v(8pt)
+#v(10pt)
 
 #let feedback-node(body) = [
   #box(
-    inset: (x: 7pt, y: 5pt),
+    width: 150pt,
+    inset: (x: 9pt, y: 6pt),
     radius: 4pt,
     fill: rgb("#fafafe"),
     stroke: rgb("#d8d8e2"),
   )[
     #set text(size: 8.75pt)
-    #body
+    #align(center)[#body]
   ]
 ]
 
@@ -119,42 +81,68 @@ The fundamental difference is not efficiency. It is how each source behaves elec
   Thermal runaway tendency
 ]
 
-#v(6pt)
+#v(8pt)
 
 #align(center)[
   #diagram(
     node-stroke: none,
     edge-stroke: rgb("#5f6370") + 0.8pt,
-    spacing: (42pt, 30pt),
-    edge-corner-radius: 6pt,
+    spacing: (200pt, 64pt),
+    edge-corner-radius: 10pt,
 
     node((0, 0), feedback-node[more current], name: <current>),
     node((1, 0), feedback-node[more heat], name: <heat>),
     node((1, 1), feedback-node[lower forward voltage], name: <vf>),
     node((0, 1), feedback-node[allows still more current], name: <more-current>),
 
-    edge(<current>, <heat>, "-|>", [I²R / junction heating], label-pos: 0.5),
-    edge(<heat>, <vf>, "-|>", [temperature rises], label-pos: 0.5),
-    edge(<vf>, <more-current>, "-|>", [same voltage pushes harder], label-pos: 0.5),
-    edge(<more-current>, <current>, "-|>", [positive feedback], label-pos: 0.5),
+    edge(
+      <current>,
+      <heat>,
+      "-|>",
+      [I²R / junction heating],
+      label-pos: 0.5,
+      label-side: left,
+    ),
+
+    edge(
+      <heat>,
+      <vf>,
+      "-|>",
+      [temperature rises],
+      label-pos: 0.5,
+      label-side: right,
+    ),
+
+    edge(
+      <vf>,
+      <more-current>,
+      "-|>",
+      [same voltage pushes harder],
+      label-pos: 0.5,
+      label-side: left,
+    ),
+
+    edge(
+      <more-current>,
+      <current>,
+      "-|>",
+      [positive feedback],
+      label-pos: 0.5,
+      label-side: right,
+    ),
   )
 ]
 
-#v(10pt)
+#v(12pt)
 
-#grid(
+#argument-table(
   columns: (0.28fr, 1fr),
-  column-gutter: 18pt,
-  align: top,
 
+  [#table-label[CONSEQUENCE]],
   [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      CONSEQUENCE
+    #table-body[
+      LEDs are not naturally self-stabilizing in the way incandescent filaments are. They need a driver that regulates current and a thermal path that keeps junction temperature under control.
     ]
-  ],
-
-  [
-    LEDs are not naturally self-stabilizing in the way incandescent filaments are. They need a driver that regulates current and a thermal path that keeps junction temperature under control.
   ],
 )
 

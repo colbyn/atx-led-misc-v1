@@ -1,3 +1,5 @@
+#import "tables.typ": argument-table, table-label, table-body, table-rule, table-strong-rule
+
 == Dimming Is Not Just “Less Power”
 
 #v(8pt)
@@ -10,74 +12,72 @@ The same visible result — less light — can come from pulsing the LED, loweri
 
 #v(14pt)
 
-#grid(
+#argument-table(
   columns: (0.28fr, 1fr),
-  column-gutter: 18pt,
-  align: top,
 
+  [#table-label[THE QUESTION]],
   [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      THE QUESTION
+    #table-body[
+      A product being “dimmable” is not enough. The real question is how it dims.
     ]
-  ],
-
-  [
-    A product being “dimmable” is not enough. The real question is how it dims.
   ],
 )
 
-#v(16pt)
+#v(18pt)
 
 #line(length: 100%, stroke: rgb("#d8d8e2"))
 
 #v(14pt)
 
-#grid(
-  columns: (1fr, 1fr, 1fr),
-  column-gutter: 16pt,
-  row-gutter: 10pt,
-  align: top,
+#argument-table(
+  columns: (0.72fr, 1.22fr, 1.38fr),
 
+  table.header(
+    [#table-label[METHOD]],
+    [#table-label[ELECTRICAL BEHAVIOR]],
+    [#table-label[QUALITY RISK]],
+  ),
+
+  table-strong-rule(),
+
+  [#table-body[PWM dimming]],
   [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      PWM DIMMING
+    #table-body[
+      The LED turns on and off rapidly. Brightness is controlled by changing the duty cycle.
     ]
-
-    #v(5pt)
-
-    Pulse-width modulation turns the LED on and off rapidly. Brightness is controlled by changing the duty cycle.
-
-    #v(6pt)
-
-    PWM is common because it is simple and controllable. But if implemented poorly, it can create visible flicker, camera banding, eyestrain, or low-quality dimming behavior.
+  ],
+  [
+    #table-body[
+      Poor implementations can create visible flicker, camera banding, eyestrain, or cheap low-end behavior.
+    ]
   ],
 
+  table-rule(),
+
+  [#table-body[current reduction]],
   [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      CURRENT REDUCTION
+    #table-body[
+      The driver lowers the actual LED current while keeping output continuous.
     ]
-
-    #v(5pt)
-
-    Current reduction lowers the actual LED current.
-
-    #v(6pt)
-
-    This avoids hard on/off pulsing and can produce very low-flicker dimming. But it may also introduce color shift, reduced driver accuracy at low levels, or a narrower practical dimming range.
+  ],
+  [
+    #table-body[
+      Can produce very low-flicker dimming, but may introduce color shift, reduced driver accuracy, or limited low-end range.
+    ]
   ],
 
+  table-rule(),
+
+  [#table-body[hybrid dimming]],
   [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      HYBRID DIMMING
+    #table-body[
+      The driver uses current reduction through most of the range, then reserves PWM for levels below the analog floor.
     ]
-
-    #v(5pt)
-
-    Better drivers often use current reduction through most of the dimming range, then reserve high-frequency PWM for the very lowest output levels.
-
-    #v(6pt)
-
-    The goal is smooth dimming without sacrificing low-end control.
+  ],
+  [
+    #table-body[
+      Often the best practical compromise when implemented at high frequency and with clean transitions.
+    ]
   ],
 )
 
@@ -149,7 +149,7 @@ The visible output may look similar, but the electrical waveform can be complete
 #let signal-section(title, subtitle, body) = block(
   width: 100%,
   inset: 10pt,
-  stroke: luma(220),
+  stroke: 0.5pt + luma(220),
   radius: 4pt,
   breakable: false,
 )[
@@ -247,3 +247,4 @@ The visible output may look similar, but the electrical waveform can be complete
     )
   ],
 )
+

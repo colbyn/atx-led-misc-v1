@@ -1,4 +1,5 @@
 #import "blocks.typ": block-quote
+#import "tables.typ": argument-table, table-label, table-body, table-rule, table-strong-rule
 
 == Drivers: The Real Electrical Interface
 
@@ -6,121 +7,63 @@
 
 An LED driver is not optional support hardware. It is the electrical interface that makes the LED usable.
 
-#v(10pt)
+#v(14pt)
 
-#grid(
+#argument-table(
   columns: (0.34fr, 1fr),
-  column-gutter: 18pt,
-  align: top,
 
+  [#table-label[DRIVER JOB]],
   [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      DRIVER JOB
+    #table-body[
+      It converts available supply power into usable LED power, regulates current through the LED, and provides the dimming or control behavior.
     ]
-  ],
-
-  [
-    It converts available supply power into usable LED power, regulates current through the LED, and provides the dimming or control behavior.
   ],
 )
 
-#v(14pt)
+#v(18pt)
 
 #line(length: 100%, stroke: rgb("#d8d8e2"))
 
 #v(14pt)
 
-#grid(
-  columns: (1fr, 1fr),
-  column-gutter: 22pt,
-  align: top,
+#argument-table(
+  columns: (0.95fr, 1.05fr, 1.35fr),
 
-  [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      CONSTANT VOLTAGE
-    ]
+  table.header(
+    [#table-label[INTERFACE]],
+    [#table-label[WHAT IT PROVIDES]],
+    [#table-label[WHERE IT BELONGS]],
+  ),
 
-    #v(5pt)
+  table-strong-rule(),
 
-    #text(size: 12pt, weight: "medium")[
-      Fixed voltage distribution.
-    ]
+  [#table-body[constant voltage]],
+  [#table-body[fixed voltage such as 12 V, 24 V, or 48 V]],
+  [#table-body[distribution buses, LED tape with onboard limiting, fixtures with downstream regulation]],
 
-    #v(7pt)
+  table-rule(),
 
-    A constant-voltage supply provides a fixed voltage, such as 12 V, 24 V, or 48 V.
+  [#table-body[constant current]],
+  [#table-body[regulated LED current with voltage allowed to float inside a permitted range]],
+  [#table-body[bare LED engines, COB modules, serious luminaires, predictable output]],
 
-    #v(6pt)
+  table-rule(),
 
-    This works when the connected load has its own current regulation or current-limiting elements.
-
-    #v(8pt)
-
-    #line(length: 100%, stroke: rgb("#d8d8e2"))
-
-    #v(7pt)
-
-    #set text(size: 9pt)
-
-    LED tape with onboard resistors \
-    fixtures with integrated drivers \
-    DC buses feeding downstream regulators \
-    useful for distribution \
-    not direct bare-LED driving
-  ],
-
-  [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      CONSTANT CURRENT
-    ]
-
-    #v(5pt)
-
-    #text(size: 12pt, weight: "medium")[
-      Direct LED current regulation.
-    ]
-
-    #v(7pt)
-
-    A constant-current driver regulates the current through the LED.
-
-    #v(6pt)
-
-    The LED voltage is allowed to float within a permitted range while current is held steady.
-
-    #v(8pt)
-
-    #line(length: 100%, stroke: rgb("#d8d8e2"))
-
-    #v(7pt)
-
-    #set text(size: 9pt)
-
-    bare LED engines \
-    COB modules \
-    serious luminaires \
-    predictable output \
-    correct electrical interface
-  ],
+  [#table-body[wrong match]],
+  [#table-body[voltage supplied where current regulation is required]],
+  [#table-body[unstable output, overheating, shortened life, or immediate LED failure]],
 )
 
 #v(16pt)
 
-#grid(
+#argument-table(
   columns: (0.34fr, 1fr),
-  column-gutter: 18pt,
-  align: top,
 
+  [#table-label[COMMON CURRENTS]],
   [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      COMMON CURRENTS
+    #table-body[
+      350 mA / 500 mA / 660 mA / 700 mA / 1050 mA / 1400 mA
     ]
-  ],
-
-  [
-    #set text(size: 9pt)
-
-    350 mA / 500 mA / 660 mA / 700 mA / 1050 mA / 1400 mA
   ],
 )
 
@@ -132,23 +75,18 @@ An LED driver is not optional support hardware. It is the electrical interface t
 
 #v(14pt)
 
-#grid(
+#argument-table(
   columns: (0.34fr, 1fr),
-  column-gutter: 18pt,
-  align: top,
 
+  [#table-label[NOT JUST WATTS]],
   [
-    #text(size: 8pt, weight: "bold", fill: rgb("#66666d"))[
-      NOT JUST WATTS
+    #table-body[
+      An LED does not behave like a resistor. White LED packages often have forward voltages around 2.7–3.3 V, while COBs and modules may contain many dies in series or series-parallel arrangements, producing higher voltage ranges such as 18 V, 36 V, 48 V, or more.
+
+      #v(6pt)
+
+      Driver matching is not merely matching “watts.” It means matching current, voltage range, thermal capacity, and control behavior.
     ]
-  ],
-
-  [
-    An LED does not behave like a resistor. White LED packages often have forward voltages around 2.7–3.3 V, while COBs and modules may contain many dies in series or series-parallel arrangements, producing higher voltage ranges such as 18 V, 36 V, 48 V, or more.
-
-    #v(6pt)
-
-    Driver matching is not merely matching “watts.” It means matching current, voltage range, thermal capacity, and control behavior.
   ],
 )
 

@@ -1,6 +1,6 @@
-#import "blocks.typ": block-quote
 #import "path.typ": path
 #import "shift.typ": shift
+#import "tables.typ": argument-table, table-label, table-body, table-rule, table-strong-rule
 
 == Architecture Should Follow the Technology
 
@@ -14,23 +14,22 @@ But most retrofit lamps force it to impersonate a mains-voltage incandescent bul
 
 #v(14pt)
 
-#grid(
-  columns: (0.38fr, 1fr),
-  column-gutter: 20pt,
-  align: top,
+#argument-table(
+  columns: (0.36fr, 1fr),
 
   [
     #text(size: 12pt, weight: "medium")[
       The retrofit lamp hides the real system.
     ]
   ],
-
   [
-    The AC socket remains. The Edison shape remains. But inside the lamp, the LED still needs rectification, current regulation, heat management, optical control, and spectral design.
+    #table-body[
+      The AC socket remains. The Edison shape remains. But inside the lamp, the LED still needs rectification, current regulation, heat management, optical control, and spectral design.
 
-    #v(6pt)
+      #v(6pt)
 
-    The result is not native LED architecture. It is semiconductor lighting compressed into the assumptions of another technology.
+      The result is not native LED architecture. It is semiconductor lighting compressed into the assumptions of another technology.
+    ]
   ],
 )
 
@@ -63,23 +62,74 @@ But most retrofit lamps force it to impersonate a mains-voltage incandescent bul
 
 #v(14pt)
 
-#grid(
-  columns: (0.38fr, 1fr),
-  column-gutter: 20pt,
-  align: top,
+#argument-table(
+  columns: (0.72fr, 1.15fr, 1.45fr),
+
+  table.header(
+    [#table-label[LAYER]],
+    [#table-label[RETROFIT LAMP]],
+    [#table-label[NATIVE LED ARCHITECTURE]],
+  ),
+
+  table-strong-rule(),
+
+  [#table-body[power conversion]],
+  [#table-body[hidden inside each lamp]],
+  [#table-body[centralized or deliberately located AC/DC conversion]],
+
+  table-rule(),
+
+  [#table-body[distribution]],
+  [#table-body[mains voltage carried to every socket]],
+  [#table-body[low-voltage DC distributed to lighting equipment]],
+
+  table-rule(),
+
+  [#table-body[current regulation]],
+  [#table-body[miniaturized inside each bulb]],
+  [#table-body[matched drivers selected for LED engines and dimming behavior]],
+
+  table-rule(),
+
+  [#table-body[thermal design]],
+  [#table-body[compressed into Edison bulb geometry]],
+  [#table-body[designed as part of the luminaire body, heat sink, and installation condition]],
+
+  table-rule(),
+
+  [#table-body[control]],
+  [#table-body[added awkwardly after the fact]],
+  [#table-body[treated as a native system layer: sensors, schedules, scenes, and overrides]],
+
+  table-rule(),
+
+  [#table-body[spectrum]],
+  [#table-body[buried behind a product label]],
+  [#table-body[specified, measured, and selected for the space]],
+)
+
+#v(18pt)
+
+#line(length: 100%, stroke: rgb("#d8d8e2"))
+
+#v(14pt)
+
+#argument-table(
+  columns: (0.36fr, 1fr),
 
   [
     #text(size: 12pt, weight: "medium")[
       A native architecture separates the layers.
     ]
   ],
-
   [
-    Instead of hiding the electrical interface inside each lamp, the system can expose the real structure: power conversion, low-voltage distribution, control inputs, current regulation, LED engines, optics, and thermal paths.
+    #table-body[
+      Instead of hiding the electrical interface inside each lamp, the system can expose the real structure: power conversion, low-voltage distribution, control inputs, current regulation, LED engines, optics, and thermal paths.
 
-    #v(6pt)
+      #v(6pt)
 
-    This does not mean every LED system must look the same. It means the architecture should begin with what the LED actually is.
+      This does not mean every LED system must look the same. It means the architecture should begin with what the LED actually is.
+    ]
   ],
 )
 

@@ -1,5 +1,7 @@
 #import "led-basics/path.typ": path
 
+#{ include "led-basics/spd.typ" }
+
 = LED Basics
 
 LED lighting is not merely a more efficient version of incandescent lighting. It is a different technological category: low-voltage, current-driven, thermally sensitive, electronically controlled, and spectrally engineered.
