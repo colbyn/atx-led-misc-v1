@@ -418,8 +418,10 @@
     #set text(size: cfg.text-size)
 
     #if title != none [
-      #_path-title(title, cfg)
-      #v(3pt)
+      #block(sticky: true)[
+        #_path-title(title, cfg)
+        #v(3pt)
+      ]
     ]
 
     #if resolved-mode == "inline" {

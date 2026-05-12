@@ -1,6 +1,6 @@
 #import "led-basics/path.typ": path
 
-#{ include "led-basics/spd.typ" }
+// #{ include "led-basics/spd.typ" }
 
 = LED Basics
 

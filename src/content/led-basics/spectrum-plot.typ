@@ -169,11 +169,12 @@
   width: 100%,
   height: 6cm,
   legend-position: auto,
-  xlabel: [Wavelength / nm],
-  ylabel: [Relative radiant power],
+  xlabel: text(size: 7pt)[Wavelength / nm],
+  ylabel: text(size: 7pt)[Relative radiant power],
   xlim: none,
   ylim: (0, 1.08),
 ) = {
+  
   let plots = ()
 
   let resolved-xlim = if xlim == none {

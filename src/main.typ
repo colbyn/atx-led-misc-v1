@@ -33,7 +33,7 @@
 
 #set text(
   font: sans,
-  size: 9.6pt,
+  size: 12pt,
   weight: 400,
   fill: ink,
 )

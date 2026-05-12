@@ -3,33 +3,6 @@
 #import "@preview/lilaq:0.6.0" as lq
 #import "spectrum-plot.typ": spectrum-plot
 
-#set par(justify: false)
-
-// ============================================================================
-// SECTION: Spectrum
-// ============================================================================
-//
-// This section uses illustrative synthetic SPD archetypes.
-// These are not measured product spectra.
-//
-// They are designed to teach spectral structure:
-// - thermal continuum
-// - blue pump + phosphor hump
-// - cyan gap
-// - weak deep red
-// - improved high-CRI fill
-// - violet-pump / full-spectrum reconstruction
-//
-// Do not use these curves for:
-// - CCT calculation
-// - CRI / TM-30
-// - melanopic EDI
-// - efficacy
-// - absolute radiant power
-// - product comparison
-//
-// Each curve is independently normalized for shape comparison.
-
 
 // ============================================================================
 // Data primitives
@@ -223,27 +196,53 @@
 #let black = rgb("#111111")
 
 #let fine-label(body, fill: mute) = [
+  #set par(justify: false)
   #text(size: 7.4pt, weight: "bold", tracking: 0.09em, fill: fill)[
     #upper(body)
   ]
 ]
 
 #let section-rule() = [
-  #v(20pt)
+  #v(32pt)
   #line(length: 100%, stroke: rule-color + 0.8pt)
-  #v(16pt)
+  #v(26pt)
 ]
 
-#let small-note(body) = [
+#let spread-gap() = v(24pt)
+#let unit-gap() = v(16pt)
+#let tight-gap() = v(9pt)
+
+#let note(body) = [
   #block(
     width: 100%,
-    inset: (x: 10pt, y: 8pt),
-    radius: 7pt,
+    inset: (x: 12pt, y: 10pt),
+    radius: 8pt,
     fill: faint,
     stroke: hairline + 0.6pt,
   )[
-    #text(size: 8.4pt, fill: soft-ink)[#body]
+    #set par(leading: 0.66em)
+    #text(size: 8.8pt, fill: soft-ink)[#body]
   ]
+]
+
+#let copy-block(body, width: 92%, size: 10pt) = [
+  #block(width: width)[
+    #set par(leading: 0.68em)
+    #text(size: size, fill: soft-ink)[#body]
+  ]
+]
+
+#let lede(body, width: 92%) = [
+  #set par(justify: false)
+  #block(width: width)[
+    #set par(leading: 0.72em)
+    #text(size: 13pt, fill: soft-ink)[#body]
+  ]
+]
+
+#let headline(body, size: 24pt, weight: "medium", fill: ink) = [
+  #set par(justify: false)
+  #text(size: size, weight: weight, fill: fill)[#body]
 ]
 
 #let data-chip(label, value, accent: black) = [
@@ -257,62 +256,64 @@
       #upper(label)
     ]
 
-    #h(5pt)
-
     #text(size: 8pt, weight: "medium", fill: accent)[#value]
   ]
 ]
 
-#let callout-card(title, body, accent: black) = [
+#let evidence-card(title, body, accent: black) = [
   #block(
     width: 100%,
-    inset: (x: 12pt, y: 11pt),
-    radius: 9pt,
+    inset: (x: 15pt, y: 14pt),
+    radius: 10pt,
     fill: panel,
     stroke: hairline + 0.7pt,
   )[
     #fine-label(title, fill: accent)
 
-    #v(7pt)
+    #v(8pt)
 
-    #text(size: 9.4pt, fill: ink)[#body]
+    #copy-block(body, width: 96%, size: 9.6pt)
   ]
 ]
 
-#let big-number(label, value, accent: black) = [
+#let claim-card(title, body, accent: black) = [
   #block(
     width: 100%,
-    inset: (x: 10pt, y: 9pt),
-    radius: 8pt,
+    inset: (x: 16pt, y: 15pt),
+    radius: 11pt,
     fill: white,
-    stroke: hairline + 0.6pt,
+    stroke: hairline + 0.75pt,
   )[
-    #fine-label(label)
+    #fine-label(title, fill: accent)
 
-    #v(5pt)
+    #v(9pt)
 
-    #text(size: 18pt, weight: "medium", fill: accent)[#value]
+    #copy-block(body, width: 96%, size: 10pt)
   ]
 ]
 
-#let matrix-row(a, b, c, d) = (
-  [
-    #set text(size: 8.8pt)
-    #a
-  ],
-  [
-    #set text(size: 8.8pt)
-    #b
-  ],
-  [
-    #set text(size: 8.8pt)
-    #c
-  ],
-  [
-    #set text(size: 8.8pt)
-    #d
-  ],
-)
+#let table-cell(body, size: 9pt, fill: ink) = [
+  #set par(leading: 0.62em)
+  #text(size: size, fill: fill)[#body]
+]
+
+#let airy-table(..children) = [
+  #block(
+    width: 100%,
+    inset: (x: 14pt, y: 12pt),
+    radius: 10pt,
+    fill: panel,
+    stroke: hairline + 0.7pt,
+  )[
+    #table(
+      columns: (0.55fr, 0.85fr, 1.65fr),
+      inset: (x: 8pt, y: 8pt),
+      stroke: none,
+      align: top,
+      ..children,
+    )
+  ]
+]
 
 
 // ============================================================================
@@ -321,7 +322,7 @@
 
 #let daylight-series = (
   (
-    label: [idealized daylight],
+    label: [☀️ idealized daylight],
     values: daylight,
     stroke: black + 1.0pt,
     draw-area: false,
@@ -401,7 +402,7 @@
   )
 }
 
-#let compare-two(a-label, a-values, a-stroke, b-label, b-values, b-stroke, title: [], height: 4.5cm) = {
+#let compare-two(a-label, a-values, a-stroke, b-label, b-values, b-stroke, title: [], height: 4.7cm) = {
   spectrum-plot(
     wl,
     title: title,
@@ -435,52 +436,46 @@
 ) = [
   #block(
     width: 100%,
-    inset: 0pt,
+    inset: 10pt,
     radius: 11pt,
     fill: white,
     stroke: hairline + 0.7pt,
+    breakable: false,
   )[
-    #block(inset: (x: 11pt, y: 10pt))[
-      #fine-label(eyebrow, fill: accent)
-
-      #v(5pt)
-
-      #text(size: 11pt, weight: "medium", fill: ink)[#title]
-    ]
-
+    #fine-label(eyebrow, fill: accent)
+    #text(size: 11pt, weight: "medium", fill: ink)[#title]
+    
     #compare-to-daylight(
       title,
       values,
       stroke,
       title: [],
-      height: 3.55cm,
+      height: 3.05cm,
     )
 
-    #block(inset: (x: 11pt, y: 10pt))[
-      #text(size: 8.7pt, fill: soft-ink)[#body]
+    #copy-block(body, width: 100%, size: 8.8pt)
 
-      #if chips.len() > 0 [
-        #v(8pt)
+    #if chips.len() > 0 [
+      #v(9pt)
 
-        #grid(
-          columns: (auto, auto, auto),
-          column-gutter: 5pt,
-          row-gutter: 5pt,
-          ..chips,
-        )
-      ]
+      #grid(
+        columns: (auto, auto, auto),
+        column-gutter: 5pt,
+        row-gutter: 5pt,
+        ..chips,
+      )
     ]
   ]
 ]
 
 #let score-strip(label, values, accent) = [
   #grid(
-    columns: (0.85fr, auto, auto, auto),
-    column-gutter: 6pt,
+    columns: (1fr, auto, auto, auto),
+    column-gutter: 8pt,
     align: horizon,
 
     [
-      #text(size: 8pt, weight: "medium")[#label]
+      #text(size: 8.8pt, weight: "medium", fill: ink)[#label]
     ],
     data-chip([cyan], [#band-score(values, 470, 510)], accent: accent),
     data-chip([red], [#band-score(values, 620, 700)], accent: accent),
@@ -498,148 +493,170 @@
 #v(10pt)
 
 #grid(
-  columns: (0.42fr, 1fr),
-  column-gutter: 24pt,
+  columns: (0.44fr, 1fr),
+  column-gutter: 10pt,
   align: top,
-
   [
     #fine-label[the hidden layer]
 
-    #v(8pt)
+    #v(10pt)
 
-    #text(size: 24pt, weight: "medium", fill: ink)[
+    #headline[
       White light is not a substance.
-    ]
-
-    #v(8pt)
-
-    #text(size: 13pt, fill: soft-ink)[
-      It is a spectral construction that happens to land on a white appearance.
-    ]
-
-    #v(14pt)
-
-    #small-note[
-      These plots are synthetic archetypes. They are intentionally normalized and simplified so the construction of each light source is easy to see.
     ]
 
     #v(10pt)
 
-    #small-note[
-      The design question is not only “what CCT is this?” The better question is “what wavelengths are actually reaching the eye, the camera, and the surfaces in the room?”
+    #lede[
+      It is a spectral construction that happens to land on a white appearance.
     ]
   ],
-
   [
     #spectrum-plot(
       wl,
       title: [Different ways to make something that looks white],
-      height: 7.2cm,
-      legend-position: auto,
+      height: 8.0cm,
+      legend-position: "bottom",
       series: all-archetypes-series,
     )
   ],
 )
 
-#v(18pt)
+#spread-gap()
 
-#grid(
-  columns: (1fr, 1fr, 1fr),
-  column-gutter: 12pt,
-  align: top,
+#block(breakable: false)[
+  #grid(
+    columns: (1fr, 1fr, 1fr),
+    column-gutter: 10pt,
+    row-gutter: 10pt,
+    align: top,
 
-  callout-card(
-    [thermal light],
-    [
-      A hot object emits a continuum. The spectrum is a consequence of temperature.
-    ],
-    accent: amber,
-  ),
+    evidence-card(
+      [thermal light],
+      [
+        A hot object emits a continuum. The spectrum is a consequence of temperature.
+      ],
+      accent: amber,
+    ),
 
-  callout-card(
-    [phosphor-converted LED],
-    [
-      A narrow semiconductor pump excites phosphors. The spectrum is assembled from pump leakage plus converted light.
-    ],
-    accent: blue,
-  ),
+    evidence-card(
+      [phosphor-converted LED],
+      [
+        A narrow semiconductor pump excites phosphors. The spectrum is assembled from pump leakage plus converted light.
+      ],
+      accent: blue,
+    ),
 
-  callout-card(
-    [multi-channel light],
-    [
-      Multiple primaries can mix to white while leaving large spectral gaps between channels.
-    ],
-    accent: red,
-  ),
-)
+    evidence-card(
+      [multi-channel light],
+      [
+        Multiple primaries can mix to white while leaving large spectral gaps between channels.
+      ],
+      accent: red,
+    ),
+
+    evidence-card(
+      [design implication],
+      [
+        A white appearance is not enough information. The wavelength distribution determines rendering, comfort, biological effect, camera behavior, and how materials appear.
+      ],
+      accent: green,
+    ),
+  )
+]
 
 #section-rule()
 
 == The Same Word “White” Hides Different Machinery
 
-#v(8pt)
+#fine-label[mechanism matters]
+
+#let mechanism-panel(label, title, accent, body, rows) = [
+  #block(
+    width: 100%,
+    inset: (x: 15pt, y: 14pt),
+    radius: 11pt,
+    fill: white,
+    stroke: hairline + 0.75pt,
+    breakable: false,
+  )[
+    #fine-label(label, fill: accent)
+
+    #v(7pt)
+
+    #text(size: 13pt, weight: "medium", fill: ink)[#title]
+
+    #v(9pt)
+
+    #copy-block(body, width: 100%, size: 9.3pt)
+
+    #v(12pt)
+
+    #table(
+      columns: (0.42fr, 1fr),
+      inset: (x: 0pt, y: 5pt),
+      stroke: none,
+      align: top,
+      ..rows.map(row => (
+        table-cell(row.at(0), size: 7.8pt, fill: mute),
+        table-cell(row.at(1), size: 8.8pt, fill: ink),
+      )).flatten(),
+    )
+  ]
+]
 
 #grid(
-  columns: (0.40fr, 1fr),
-  column-gutter: 24pt,
+  columns: (1fr, 1fr),
+  column-gutter: 10pt,
   align: top,
-
   [
-    #fine-label[mechanism matters]
-
-    #v(8pt)
-
-    #text(size: 18pt, weight: "medium", fill: ink)[
-      Incandescent light is emitted.
+    #align(center)[
+      #headline(size: 16pt, weight: "semibold", fill: rgb("#808090"))[ Incandescent light is emitted. ]
     ]
-
-    #v(6pt)
-
-    #text(size: 18pt, weight: "medium", fill: ink)[
-      LED white is engineered.
-    ]
-
-    #v(10pt)
-
-    #text(size: 10pt, fill: soft-ink)[
-      That single difference changes what has to be specified, verified, and controlled.
-    ]
-  ],
-
-  [
-    #path(
+    #mechanism-panel(
+      [thermal source],
+      [Incandescent is constrained by temperature.],
+      amber,
+      [
+        The spectrum follows from a hot filament. You can dim it, cool it, or heat it, but the source remains a continuous thermal radiator.
+      ],
       (
-        (
-          title: [thermal continuum],
-          relation: "inline",
-          steps: (
-            [temperature],
-            [continuous spectrum],
-            [warm white appearance],
-          ),
-        ),
-        (
-          title: [LED construction],
-          relation: "inline",
-          steps: (
-            [semiconductor pump],
-            [phosphor conversion],
-            [mixed white output],
-            [measured SPD],
-          ),
-        ),
+        ([source variable], [filament temperature]),
+        ([spectral shape], [continuous, red-heavy curve]),
+        ([main tradeoff], [beautiful continuity, poor efficiency]),
+        ([what to verify], [mostly output, heat, lifetime]),
       ),
-      title: [Two routes to white],
+    )
+  ],
+  [
+    #align(center)[
+      #headline(size: 16pt, weight: "semibold", fill: rgb("#808090"))[ LED white is engineered. ]
+    ]
+    #mechanism-panel(
+      [engineered source],
+      [LED white is a product architecture.],
+      blue,
+      [
+        The spectrum is assembled from semiconductor emission, phosphor conversion, package design, current, heat, optics, and driver behavior.
+      ],
+      (
+        ([source variable], [pump wavelength + phosphor recipe]),
+        ([spectral shape], [spike, valley, hump, red tail]),
+        ([main tradeoff], [efficiency versus spectral quality]),
+        ([what to verify], [SPD, flicker, thermal behavior, control mode]),
+      ),
     )
   ],
 )
 
-#v(18pt)
+#lede[
+  That single difference changes what has to be specified, verified, and controlled. The visible result may be called “white” in both cases, but the machinery behind that appearance is completely different.
+]
 
 #grid(
   columns: (1fr, 1fr),
-  column-gutter: 16pt,
-  row-gutter: 16pt,
+  column-gutter: 18pt,
+  row-gutter: 18pt,
   align: top,
 
   [
@@ -647,16 +664,16 @@
       [incandescent],
       incandescent,
       amber + 1.0pt,
-      [idealized daylight],
+      [☀️ idealized daylight],
       daylight,
       black + 0.9pt,
       title: [Thermal light: continuous, warm, red-heavy],
-      height: 4.8cm,
+      height: 4.9cm,
     )
 
-    #v(7pt)
+    #v(9pt)
 
-    #text(size: 9pt, fill: soft-ink)[
+    #copy-block[
       Incandescent is spectrally continuous, but tilted heavily toward long wavelengths. Its weakness is efficiency, not spectral assembly.
     ]
   ],
@@ -666,35 +683,99 @@
       [cheap blue-pump LED],
       cheap-blue-pump,
       blue + 1.0pt,
-      [idealized daylight],
+      [☀️ idealized daylight],
       daylight,
       black + 0.9pt,
       title: [Basic LED: spike, valley, phosphor hump],
-      height: 4.8cm,
+      height: 4.9cm,
     )
 
-    #v(7pt)
+    #v(9pt)
 
-    #text(size: 9pt, fill: soft-ink)[
+    #copy-block[
       A basic blue-pump LED can look white while still having a hard pump spike, a cyan depression, and weak deep red.
     ]
   ],
 )
 
-#section-rule()
-
 == The Spectral Anatomy of Common White Light
 
 #v(8pt)
 
-This is the useful mental model: not “warm versus cool,” but **where the energy is**.
+#grid(
+  columns: (0.34fr, 1fr),
+  column-gutter: 26pt,
+  align: top,
 
-#v(14pt)
+  [
+    // #set par(justify: false)
+    #fine-label[mental model]
+
+    #headline(size: 22pt)[
+      Not warm versus cool.
+    ]
+
+    Please manufacturer, designers everywhere: stop talking about kelvin.
+
+    #headline(size: 22pt)[
+      Where is the energy?
+    ]
+  ],
+
+  [
+    #lede[
+      The useful reading habit is to stop treating white as a single category. A white-light spectrum is an energy distribution, not a color name.
+    ]
+
+    #v(12pt)
+
+    #grid(
+      columns: (1fr, 1fr),
+      column-gutter: 14pt,
+      row-gutter: 10pt,
+      align: top,
+
+      [
+        #fine-label[pump]
+
+        #v(4pt)
+
+        Look for the narrow source peak: usually blue around 450 nm, sometimes violet closer to 405 nm.
+      ],
+
+      [
+        #fine-label[gap]
+
+        #v(4pt)
+
+        Check whether the cyan region is weak. A dip around blue-green wavelengths can matter visually and biologically.
+      ],
+
+      [
+        #fine-label[phosphor hump]
+
+        #v(4pt)
+
+        Read the broad converted output. This is where much of the visible “white” impression is assembled.
+      ],
+
+      [
+        #fine-label[red tail]
+
+        #v(4pt)
+
+        Look at how far the spectrum carries into deep red. This affects warmth, color rendering, and material appearance.
+      ],
+    )
+  ],
+)
+
+#spread-gap()
 
 #grid(
   columns: (1fr, 1fr),
-  column-gutter: 16pt,
-  row-gutter: 16pt,
+  column-gutter: 10pt,
+  row-gutter: 10pt,
   align: top,
 
   archetype-card(
@@ -784,7 +865,7 @@ This is the useful mental model: not “warm versus cool,” but **where the ene
     red + 0.95pt,
     red,
     [
-      Can land on a white appearance while leaving large gaps between primaries. Useful for color effects, weaker as a general-quality white source.
+      Can land on a white appearance while leaving large gaps between primaries. Useful for color effects, weaker as a general-quality white source (understatement).
     ],
     chips: (
       data-chip([channels], [3], accent: red),
@@ -800,329 +881,105 @@ This is the useful mental model: not “warm versus cool,” but **where the ene
 
 #v(8pt)
 
-Correlated color temperature describes the apparent white point. It does not describe the spectral structure that produced that white point.
-
-#v(12pt)
-
 #grid(
-  columns: (0.52fr, 1fr),
-  column-gutter: 22pt,
+  columns: (0.38fr, 1fr),
+  column-gutter: 28pt,
   align: top,
 
   [
     #fine-label[the label problem]
 
-    #v(8pt)
+    #v(10pt)
 
-    #text(size: 21pt, weight: "medium", fill: ink)[
+    #headline[
       4000 K is not a spectrum.
     ]
+  ],
 
-    #v(9pt)
+  [
+    #lede[
+      Correlated color temperature describes the apparent white point. It does not describe the spectral structure that produced that white point.
+    ]
 
-    #text(size: 10pt, fill: soft-ink)[
+    #v(10pt)
+
+    #copy-block(size: 10.2pt)[
       Two products can share a CCT label while differing in pump wavelength, cyan energy, red rendering, spectral smoothness, melanopic weighting, and material appearance.
     ]
 
     #v(12pt)
 
-    #small-note[
+    #note[
       CCT tells you where the white point appears. SPD tells you what wavelengths are actually present.
     ]
   ],
-
-  [
-    #table(
-      columns: (0.72fr, 1.0fr, 1.45fr),
-      inset: (x: 8pt, y: 7pt),
-      stroke: none,
-      align: top,
-
-      table.header(
-        [
-          #fine-label[same sales label]
-        ],
-        [
-          #fine-label[hidden variable]
-        ],
-        [
-          #fine-label[what changes]
-        ],
-      ),
-
-      table.hline(stroke: rule-color + 0.8pt),
-
-      [
-        #set text(size: 9pt)
-        4000 K
-      ],
-      [
-        #set text(size: 9pt)
-        pump wavelength
-      ],
-      [
-        #set text(size: 9pt)
-        Blue-pump and violet-pump products can reach similar apparent white points through different spectral construction.
-      ],
-
-      table.hline(stroke: hairline + 0.6pt),
-
-      [
-        #set text(size: 9pt)
-        4000 K
-      ],
-      [
-        #set text(size: 9pt)
-        cyan energy
-      ],
-      [
-        #set text(size: 9pt)
-        The same CCT can feel visually fresh or dull depending on energy around the blue-green region.
-      ],
-
-      table.hline(stroke: hairline + 0.6pt),
-
-      [
-        #set text(size: 9pt)
-        4000 K
-      ],
-      [
-        #set text(size: 9pt)
-        red content
-      ],
-      [
-        #set text(size: 9pt)
-        Skin, wood, food, leather, textiles, and warm finishes can look alive or dead under the same label.
-      ],
-
-      table.hline(stroke: hairline + 0.6pt),
-
-      [
-        #set text(size: 9pt)
-        4000 K
-      ],
-      [
-        #set text(size: 9pt)
-        spectral smoothness
-      ],
-      [
-        #set text(size: 9pt)
-        One lamp can be smooth and broad; another can be spiky and sparse.
-      ],
-
-      table.hline(stroke: hairline + 0.6pt),
-
-      [
-        #set text(size: 9pt)
-        4000 K
-      ],
-      [
-        #set text(size: 9pt)
-        melanopic weighting
-      ],
-      [
-        #set text(size: 9pt)
-        Biological potency depends on wavelength-weighted energy at the eye, not on the CCT label alone.
-      ],
-    )
-  ],
 )
 
-#section-rule()
+#spread-gap()
 
-== A More Useful Spectral Scorecard
+#block(
+  width: 100%,
+  inset: (x: 14pt, y: 12pt),
+  radius: 10pt,
+  fill: panel,
+  stroke: hairline + 0.7pt,
+)[
+  #table(
+    columns: (0.55fr, 0.85fr, 1.65fr),
+    inset: (x: 8pt, y: 8pt),
+    stroke: none,
+    align: top,
 
-#v(8pt)
+    table.header(
+      [
+        #fine-label[same sales label]
+      ],
+      [
+        #fine-label[hidden variable]
+      ],
+      [
+        #fine-label[what changes]
+      ],
+    ),
 
-These are not formal color-science metrics. They are quick visual indices derived from the synthetic curves so the section teaches what to look for.
+    table.hline(stroke: rule-color + 0.8pt),
 
-#v(12pt)
-
-#grid(
-  columns: (0.42fr, 1fr),
-  column-gutter: 22pt,
-  align: top,
-
-  [
-    #fine-label[reading the graph]
-
-    #v(8pt)
-
-    #text(size: 18pt, weight: "medium", fill: ink)[
-      Look at bands, not just peaks.
-    ]
-
-    #v(9pt)
-
-    #text(size: 9.5pt, fill: soft-ink)[
-      Cyan tells you about the blue-green region. Red tells you about warm material rendering. Violet/blue tells you how much short-wavelength energy is driving the construction.
-    ]
-
-    #v(12pt)
-
-    #small-note[
-      These scores are normalized band averages from the illustrative curves, scaled 0–100. They are teaching aids, not measurement results.
-    ]
-  ],
-
-  [
-    #block(
-      width: 100%,
-      inset: (x: 12pt, y: 11pt),
-      radius: 10pt,
-      fill: panel,
-      stroke: hairline + 0.7pt,
-    )[
-      #score-strip([Incandescent], incandescent, amber)
-      #v(6pt)
-      #score-strip([Cheap blue-pump LED], cheap-blue-pump, blue)
-      #v(6pt)
-      #score-strip([Commodity blue-pump LED], commodity-blue-pump, cyan)
-      #v(6pt)
-      #score-strip([High-CRI blue-pump LED], high-cri-blue-pump, green)
-      #v(6pt)
-      #score-strip([Violet-pump LED], violet-pump, violet)
-      #v(6pt)
-      #score-strip([RGB mixed white], rgb-white, red)
-    ]
-  ],
-)
-
-#section-rule()
-
-== The Practical Design Consequence
-
-#v(8pt)
-
-A lighting specification that stops at CCT is under-specified.
-
-#v(12pt)
-
-#grid(
-  columns: (1fr, 1fr, 1fr),
-  column-gutter: 12pt,
-  row-gutter: 12pt,
-  align: top,
-
-  callout-card(
-    [do not specify only CCT],
-    [
-      “3000 K” or “4000 K” describes apparent color temperature. It does not describe spectral quality.
+    table-cell[4000 K],
+    table-cell[pump wavelength],
+    table-cell[
+      Blue-pump and violet-pump products can reach similar apparent white points through different spectral construction.
     ],
-    accent: red,
-  ),
 
-  callout-card(
-    [ask for the SPD],
-    [
-      The spectral power distribution shows the actual wavelength content behind the white appearance.
+    table.hline(stroke: hairline + 0.6pt),
+
+    table-cell[4000 K],
+    table-cell[cyan energy],
+    table-cell[
+      The same CCT can feel visually fresh or dull depending on energy around the blue-green region.
     ],
-    accent: blue,
-  ),
 
-  callout-card(
-    [connect spectrum to use],
-    [
-      Rendering, comfort, camera behavior, circadian effect, and architectural atmosphere all depend on spectral distribution.
+    table.hline(stroke: hairline + 0.6pt),
+
+    table-cell[4000 K],
+    table-cell[red content],
+    table-cell[
+      Skin, wood, food, leather, textiles, and warm finishes can look alive or dead under the same label.
     ],
-    accent: green,
-  ),
-)
 
-#v(16pt)
+    table.hline(stroke: hairline + 0.6pt),
 
-#grid(
-  columns: (0.35fr, 1fr),
-  column-gutter: 20pt,
-  align: top,
+    table-cell[4000 K],
+    table-cell[spectral smoothness],
+    table-cell[
+      One lamp can be smooth and broad; another can be spiky and sparse.
+    ],
 
-  [
-    #fine-label[minimum evidence]
-  ],
+    table.hline(stroke: hairline + 0.6pt),
 
-  [
-    #table(
-      columns: (0.55fr, 1.15fr),
-      inset: (x: 8pt, y: 7pt),
-      stroke: none,
-      align: top,
-
-      table.header(
-        [
-          #fine-label[ask for]
-        ],
-        [
-          #fine-label[why it matters]
-        ],
-      ),
-
-      table.hline(stroke: rule-color + 0.8pt),
-
-      [
-        #set text(size: 9pt)
-        SPD graph
-      ],
-      [
-        #set text(size: 9pt)
-        Shows pump spikes, cyan gaps, red weakness, spectral smoothness, and full visible coverage.
-      ],
-
-      table.hline(stroke: hairline + 0.6pt),
-
-      [
-        #set text(size: 9pt)
-        TM-30
-      ],
-      [
-        #set text(size: 9pt)
-        Better than CRI alone for seeing fidelity, gamut, and hue-specific distortion.
-      ],
-
-      table.hline(stroke: hairline + 0.6pt),
-
-      [
-        #set text(size: 9pt)
-        Flicker data
-      ],
-      [
-        #set text(size: 9pt)
-        Spectrum is not the only quality variable. Driver behavior affects comfort, camera performance, and perceived quality.
-      ],
-
-      table.hline(stroke: hairline + 0.6pt),
-
-      [
-        #set text(size: 9pt)
-        Melanopic data
-      ],
-      [
-        #set text(size: 9pt)
-        Circadian potency depends on wavelength-weighted light at the eye, not the CCT label.
-      ],
-
-      table.hline(stroke: hairline + 0.6pt),
-
-      [
-        #set text(size: 9pt)
-        Application context
-      ],
-      [
-        #set text(size: 9pt)
-        A gallery, kitchen, bedroom, office, bathroom mirror, and circadian system should not be judged by the same single label.
-      ],
-    )
-  ],
-)
-
-#v(16pt)
-
-#block-quote[
-  White is the appearance. Spectrum is the mechanism.
+    table-cell[4000 K],
+    table-cell[melanopic weighting],
+    table-cell[
+      Biological potency depends on wavelength-weighted energy at the eye, not on the CCT label alone.
+    ],
+  )
 ]
-
-#v(8pt)
-
-#block-quote[
-  Do not infer light quality from CCT alone. Specify the spectrum, measure the spectrum, and design around the spectrum.
-]
-
