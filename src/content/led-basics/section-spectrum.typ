@@ -183,9 +183,9 @@
 #let soft-ink = rgb("#4d4d58")
 #let mute = rgb("#6f707b")
 #let faint = rgb("#f5f5f8")
-#let panel = rgb("#fbfbfd")
+#let panel = rgb("#fcfcff")
 #let rule-color = rgb("#d9d9e3")
-#let hairline = rgb("#e8e8ef")
+#let hairline = rgb("#dbdbeb")
 
 #let blue = rgb("#005eff")
 #let cyan = rgb("#008f9a")
@@ -263,14 +263,12 @@
 #let evidence-card(title, body, accent: black) = [
   #block(
     width: 100%,
-    inset: (x: 15pt, y: 14pt),
-    radius: 10pt,
+    inset: (x: 12pt, y: 12pt),
+    radius: 6pt,
     fill: panel,
-    stroke: hairline + 0.7pt,
+    stroke: hairline + 0.5pt,
   )[
     #fine-label(title, fill: accent)
-
-    #v(8pt)
 
     #copy-block(body, width: 96%, size: 9.6pt)
   ]
@@ -488,25 +486,19 @@
 // Section content
 // ============================================================================
 
+#pagebreak()
+
 == Spectrum Is the Real Light Source
 
-#v(10pt)
-
 #grid(
-  columns: (0.44fr, 1fr),
+  columns: (0.40fr, 1fr),
   column-gutter: 10pt,
   align: top,
   [
     #fine-label[the hidden layer]
-
-    #v(10pt)
-
     #headline[
       White light is not a substance.
     ]
-
-    #v(10pt)
-
     #lede[
       It is a spectral construction that happens to land on a white appearance.
     ]
@@ -526,9 +518,9 @@
 
 #block(breakable: false)[
   #grid(
-    columns: (1fr, 1fr, 1fr),
-    column-gutter: 10pt,
-    row-gutter: 10pt,
+    columns: (1fr, 1fr),
+    column-gutter: 8pt,
+    row-gutter: 8pt,
     align: top,
 
     evidence-card(
@@ -565,7 +557,7 @@
   )
 ]
 
-#section-rule()
+#pagebreak()
 
 == The Same Word “White” Hides Different Machinery
 
@@ -667,7 +659,7 @@
       [☀️ idealized daylight],
       daylight,
       black + 0.9pt,
-      title: [Thermal light: continuous, warm, red-heavy],
+      title: [#text(size: 10pt)[Thermal light: continuous, warm, red-heavy]],
       height: 4.9cm,
     )
 
@@ -686,7 +678,7 @@
       [☀️ idealized daylight],
       daylight,
       black + 0.9pt,
-      title: [Basic LED: spike, valley, phosphor hump],
+      title: [#text(size: 10pt)[Basic LED: spike, valley, phosphor hump]],
       height: 4.9cm,
     )
 
@@ -731,8 +723,8 @@
 
     #grid(
       columns: (1fr, 1fr),
-      column-gutter: 14pt,
-      row-gutter: 10pt,
+      column-gutter: 10pt,
+      row-gutter: 18pt,
       align: top,
 
       [
